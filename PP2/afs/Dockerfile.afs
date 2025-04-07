@@ -1,0 +1,35 @@
+# Dockerfile.afs for Advanced Flights System
+
+# Builder stage: install dependencies and build the app
+FROM node:18-alpine AS builder
+WORKDIR /afs
+
+# Copy centralized .env file from the repository root into the container
+COPY .env .env
+
+# Copy package files and install dependencies
+COPY afs/package.json afs/package-lock.json ./
+RUN npm install
+
+# Copy the entire AFS source code into the container
+COPY afs/ ./
+
+# RUN npx prisma migrate deploy
+
+# Runner stage: prepare the production environment
+FROM node:18-alpine AS runner
+WORKDIR /afs
+ENV NODE_ENV=production
+
+# Copy all files from the builder stage
+COPY --from=builder /afs ./
+
+# Copy the entrypoint script
+COPY afs/entrypoint.sh /afs/entrypoint.sh
+RUN chmod +x /afs/entrypoint.sh
+
+# Expose the port on which AFS will run (adjust if necessary)
+EXPOSE 4000
+
+# Use the entrypoint script to wait for the db, run migrations, then start the server
+CMD ["/afs/entrypoint.sh"]

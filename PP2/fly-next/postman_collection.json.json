@@ -1,0 +1,1034 @@
+{
+	"info": {
+		"_postman_id": "e59d981e-e9f3-4fd1-8619-5b9480e2471f",
+		"name": "CSC309 Project",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "42867938",
+		"_collection_link": "https://csc309-project-0251.postman.co/workspace/CSC309-Project-Workspace~5372a328-7e27-4b3f-94b3-3d7ee722ab18/collection/42867938-e59d981e-e9f3-4fd1-8619-5b9480e2471f?action=share&source=collection_link&creator=42867938"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "User Signup",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstName\": \"Alex\",\r\n    \"lastName\": \"Voidoc\",\r\n    \"email\": \"Alex.Voidoc@mail.utoronto.ca\",\r\n    \"password\": \"SuperSecretPassword123\",\r\n    \"phoneNumber\": \"905-123-4567\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api/auth/signup",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"auth",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var response = pm.response.json();\r",
+									"if (response.accessToken) {\r",
+									"    pm.environment.set(\"accessToken\", response.accessToken);\r",
+									"    pm.environment.set(\"refreshToken\", response.refreshToken);\r",
+									"    pm.environment.set(\"tokenExpiry\", Date.now() + (response.expiresIn * 1000)); // Store expiry in ms\r",
+									"}\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"followAuthorizationHeader": false
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"Alex.Voidoc@mail.utoronto.ca\",\r\n    \"password\": \"SuperSecretPassword123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api/auth/login",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User Update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstName\": \"Alex 2\",\r\n    \"lastName\": \"Voidoc 2\",\r\n    \"email\": \"newEmail@mail.utoronto.ca\",\r\n    \"phoneNumber\": \"905-987-6543\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api/user",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"user"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Hotels",
+			"item": [
+				{
+					"name": "[hotelId]",
+					"item": [
+						{
+							"name": "bookings",
+							"item": [
+								{
+									"name": "[bookingId]",
+									"item": [
+										{
+											"name": "Delete booking 404",
+											"request": {
+												"auth": {
+													"type": "bearer",
+													"bearer": [
+														{
+															"key": "token",
+															"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiJjbTgwbHhxcmUwMDF6dHA5MHp1a3NlZXl1IiwiaWF0IjoxNzQxNDY3NzU5LCJleHAiOjE3NDE0Njk1NTl9.2HQGS7gqnlGU1yzIWJU41YxplHqb8TXW1uBMgVdXt_s",
+															"type": "string"
+														}
+													]
+												},
+												"method": "DELETE",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "localhost:3000/api/hotels/cm80pfeuj0001tpwgkib8uvah/bookings/fakeBookingId",
+													"host": [
+														"localhost"
+													],
+													"port": "3000",
+													"path": [
+														"api",
+														"hotels",
+														"cm80pfeuj0001tpwgkib8uvah",
+														"bookings",
+														"fakeBookingId"
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								},
+								{
+									"name": "Get All bookings 200",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "GET",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "localhost:3000/api/hotels/cm7yfgg1a0009tpogveiclhch/bookings?startDate=2023-07-01&endDate=2021-07",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"hotels",
+												"cm7yfgg1a0009tpogveiclhch",
+												"bookings"
+											],
+											"query": [
+												{
+													"key": "startDate",
+													"value": "2023-07-01"
+												},
+												{
+													"key": "endDate",
+													"value": "2021-07"
+												}
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "room-types",
+							"item": [
+								{
+									"name": "Inventory",
+									"item": [
+										{
+											"name": "Decrease Availability 200",
+											"request": {
+												"method": "PATCH",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\r\n        \"removeCount\": 1\r\n      }",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "http://localhost:3000/api/hotels/cm7yf56uc0006tpogekas3zst/room-types/cm7zd8is50004tpi0s6tz7jb6/inventory",
+													"protocol": "http",
+													"host": [
+														"localhost"
+													],
+													"port": "3000",
+													"path": [
+														"api",
+														"hotels",
+														"cm7yf56uc0006tpogekas3zst",
+														"room-types",
+														"cm7zd8is50004tpi0s6tz7jb6",
+														"inventory"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Get inventory 200",
+											"protocolProfileBehavior": {
+												"disableBodyPruning": true
+											},
+											"request": {
+												"method": "GET",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "http://localhost:3000/api/hotels/cm7yf56uc0006tpogekas3zst/room-types/cm7zd8is50004tpi0s6tz7jb6/inventory",
+													"protocol": "http",
+													"host": [
+														"localhost"
+													],
+													"port": "3000",
+													"path": [
+														"api",
+														"hotels",
+														"cm7yf56uc0006tpogekas3zst",
+														"room-types",
+														"cm7zd8is50004tpi0s6tz7jb6",
+														"inventory"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Add Rooms 201",
+											"request": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "\r\n{    \"roomsToAdd\": 5    }\r\n",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "http://localhost:3000/api/hotels/cm80iazgj0000tp900id7vg5x/room-types/cm80ieuag0003tp907pjjy8ih/inventory",
+													"protocol": "http",
+													"host": [
+														"localhost"
+													],
+													"port": "3000",
+													"path": [
+														"api",
+														"hotels",
+														"cm80iazgj0000tp900id7vg5x",
+														"room-types",
+														"cm80ieuag0003tp907pjjy8ih",
+														"inventory"
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								},
+								{
+									"name": "Create Room-Type 201",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiJjbTgwbHhxcmUwMDF6dHA5MHp1a3NlZXl1IiwiaWF0IjoxNzQxNDY3NzU5LCJleHAiOjE3NDE0Njk1NTl9.2HQGS7gqnlGU1yzIWJU41YxplHqb8TXW1uBMgVdXt_s",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"name\": \"newRoom124\",\r\n    \"amenities\": [\"\"],\r\n    \"pricePerNight\": 1,\r\n    \"images\": [\"\"]\r\n    }",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "localhost:3000/api/hotels/cm80pfeuj0001tpwgkib8uvah/room-types",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"hotels",
+												"cm80pfeuj0001tpwgkib8uvah",
+												"room-types"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "availability",
+							"item": [
+								{
+									"name": "Get available rooms 200",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "localhost:3000/api/hotels/cm7yf56uc0006tpogekas3zst/availability?startDate=2023-07-01&endDate=2021-07",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"hotels",
+												"cm7yf56uc0006tpogekas3zst",
+												"availability"
+											],
+											"query": [
+												{
+													"key": "startDate",
+													"value": "2023-07-01"
+												},
+												{
+													"key": "endDate",
+													"value": "2021-07"
+												},
+												{
+													"key": "roomTypeId",
+													"value": "cm7zd8is50004tpi0s6tz7jb6",
+													"disabled": true
+												}
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "search",
+					"item": [
+						{
+							"name": "[hotelId]",
+							"item": [
+								{
+									"name": "Availability",
+									"item": [
+										{
+											"name": "Get Available rooms and room info 200",
+											"request": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "localhost:3000/api/hotels/search/cm7yf56uc0006tpogekas3zst/availability?checkIn=2025-04-01&checkOut=2025-03-01",
+													"host": [
+														"localhost"
+													],
+													"port": "3000",
+													"path": [
+														"api",
+														"hotels",
+														"search",
+														"cm7yf56uc0006tpogekas3zst",
+														"availability"
+													],
+													"query": [
+														{
+															"key": "checkIn",
+															"value": "2025-04-01"
+														},
+														{
+															"key": "checkOut",
+															"value": "2025-03-01"
+														}
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								},
+								{
+									"name": "Get Hotel Info 200",
+									"request": {
+										"method": "GET",
+										"header": []
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Search Hotels no params 200",
+							"request": {
+								"auth": {
+									"type": "bearer"
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:3000/api/hotels/search",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"hotels",
+										"search"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Search Hotels date only",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/hotels/search?checkIn=2025-04-01&checkOut=2025-03-01",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"hotels",
+										"search"
+									],
+									"query": [
+										{
+											"key": "checkIn",
+											"value": "2025-04-01"
+										},
+										{
+											"key": "checkOut",
+											"value": "2025-03-01"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Create Hotel 201",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"AuthHotel2\",\r\n    \"address\": \"addy\",\r\n    \"location\": \"location\",\r\n    \"Rating\": 2,\r\n    \"images\": [\"\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api/hotels/",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"hotels",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Flights",
+			"item": [
+				{
+					"name": "Get flights (one-way)",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/api/flights?source=Frankfurt%20Airport&destination=Billy%20Bishop%20Toronto%20City%20Airport&date=2024-11-17&tripType=one-way",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"flights"
+							],
+							"query": [
+								{
+									"key": "source",
+									"value": "Frankfurt%20Airport"
+								},
+								{
+									"key": "destination",
+									"value": "Billy%20Bishop%20Toronto%20City%20Airport"
+								},
+								{
+									"key": "date",
+									"value": "2024-11-17"
+								},
+								{
+									"key": "tripType",
+									"value": "one-way"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get flight details",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/api/flights/bd7ee4df-004d-4c95-abda-633d276a5842",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"flights",
+								"bd7ee4df-004d-4c95-abda-633d276a5842"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get flights (round-trip)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/api/flights?source=Toronto&destination=Zurich&date=2024-11-17&returnDate=2024-11-24&tripType=round-trip",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"flights"
+							],
+							"query": [
+								{
+									"key": "source",
+									"value": "Toronto"
+								},
+								{
+									"key": "destination",
+									"value": "Zurich"
+								},
+								{
+									"key": "date",
+									"value": "2024-11-17"
+								},
+								{
+									"key": "returnDate",
+									"value": "2024-11-24"
+								},
+								{
+									"key": "tripType",
+									"value": "round-trip"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search Autofill",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/api/flights/autocomplete?search=toro",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"flights",
+								"autocomplete"
+							],
+							"query": [
+								{
+									"key": "search",
+									"value": "toro"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Refresh Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var response = pm.response.json();\r",
+									"if (response.accessToken) {\r",
+									"    pm.environment.set(\"accessToken\", response.accessToken);\r",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"refreshToken\": \"{{refreshToken}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api/auth/refresh",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"auth",
+								"refresh"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Notifications",
+			"item": [
+				{
+					"name": "Get notifications",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/api/notifications",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"notifications"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create notification",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userId\": \"cm80sfw990000hh2kcuo69wrh\",\r\n    \"title\": \"Example notification\",\r\n    \"description\": \"This is an example description\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api/notifications",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"notifications"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get unread notification count",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/api/notifications/count",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"notifications",
+								"count"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update notification read status",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"isRead\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api/notifications/cm80yyfpr0001hhcs5rlx3bfs",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"notifications",
+								"cm80yyfpr0001hhcs5rlx3bfs"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "bookings",
+			"item": [
+				{
+					"name": "[Id]",
+					"item": [
+						{
+							"name": "suggestions",
+							"item": [
+								{
+									"name": "flights",
+									"item": [
+										{
+											"name": "Get all flights from a city",
+											"request": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "localhost:3000/api/bookings/[id]/suggestions/flights/?city=\"City\"",
+													"host": [
+														"localhost"
+													],
+													"port": "3000",
+													"path": [
+														"api",
+														"bookings",
+														"[id]",
+														"suggestions",
+														"flights",
+														""
+													],
+													"query": [
+														{
+															"key": "city",
+															"value": "\"City\""
+														}
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								},
+								{
+									"name": "hotels",
+									"item": [
+										{
+											"name": "Get hotels in a city",
+											"request": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "localhost:3000/api/bookings/[id]/suggestions/hotels/?city=\"City\"",
+													"host": [
+														"localhost"
+													],
+													"port": "3000",
+													"path": [
+														"api",
+														"bookings",
+														"[id]",
+														"suggestions",
+														"hotels",
+														""
+													],
+													"query": [
+														{
+															"key": "city",
+															"value": "\"City\""
+														}
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "Gets a specific flight",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:3000/api/bookings/[id]",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"bookings",
+										"[id]"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Book a flight",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"userId\": \"user_12345\",\r\n  \"roomId\": \"room_98765\",\r\n  \"roomTypeId\": \"roomType_45678\",\r\n  \"hotelId\": \"hotel_54321\",\r\n  \"checkIn\": \"2025-06-15T15:00:00.000Z\",\r\n  \"checkOut\": \"2025-06-20T11:00:00.000Z\",\r\n  \"paymentInfo\": {\r\n    \"cardNumber\": \"4111111111111111\",\r\n    \"expiry\": \"12/27\",\r\n    \"cvv\": \"123\"\r\n  },\r\n  \"email\": \"john.doe@example.com\",\r\n  \"firstName\": \"John\",\r\n  \"lastName\": \"Doe\",\r\n  \"flightIds\": [\"flight_001\", \"flight_002\"],\r\n  \"passportNumber\": \"A12345678\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api/bookings",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"bookings"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "oauth2",
+		"oauth2": [
+			{
+				"key": "accessTokenUrl",
+				"value": "http://localhost:3000/api/auth/login",
+				"type": "string"
+			},
+			{
+				"key": "authUrl",
+				"value": "",
+				"type": "string"
+			},
+			{
+				"key": "redirect_uri",
+				"value": "https://oauth.pstmn.io/v1/callback",
+				"type": "string"
+			},
+			{
+				"key": "tokenName",
+				"value": "FlyNext Token",
+				"type": "string"
+			},
+			{
+				"key": "refreshTokenUrl",
+				"value": "localhost:3000/api/auth/refresh",
+				"type": "string"
+			},
+			{
+				"key": "addTokenTo",
+				"value": "header",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

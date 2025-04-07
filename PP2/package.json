@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "axios": "^1.8.4",
+    "jspdf": "^2.5.1"
+  },
+  "devDependencies": {
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
+  }
+}
